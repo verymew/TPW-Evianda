@@ -1,13 +1,9 @@
 import { HttpClient } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
-@Component({
-  selector: 'app-home',
-  standalone: true,
-  imports: [],
-  templateUrl: './home.component.html',
-  styleUrl: './home.component.css'
+@Injectable({
+  providedIn: 'root'
 })
 export class AuthService {
 
@@ -21,5 +17,7 @@ export class AuthService {
     let url:string = `https://viacep.com.br/ws/${cep}/json`;
     return this.http.get(url);
   }
+
+
 
 }
