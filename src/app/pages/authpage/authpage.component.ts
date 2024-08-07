@@ -1,14 +1,22 @@
-import { Component } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import {MatCardModule} from '@angular/material/card';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import { MatFormField } from '@angular/material/form-field';
+import {MatIconModule} from '@angular/material/icon';
+import {MatInputModule} from '@angular/material/input';
+import {MatButtonModule} from '@angular/material/button';
+
+
 
 
 @Component({
   selector: 'app-authpage',
   standalone: true,
-  imports: [MatCardModule],
+  imports: [MatCardModule, ReactiveFormsModule, MatFormFieldModule, MatFormField, MatIconModule, MatInputModule, MatButtonModule],
   templateUrl: './authpage.component.html',
-  styleUrl: './authpage.component.css'
+  styleUrl: './authpage.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AuthpageComponent {
   registration = new FormGroup({
@@ -16,6 +24,12 @@ export class AuthpageComponent {
     password : new FormControl(),
     gender : new FormControl()
   });
+
+  hide = signal(true);
+  clickEvent(event: MouseEvent) {
+    this.hide.set(!this.hide());
+    event.stopPropagation();
+  }
 
 
 
