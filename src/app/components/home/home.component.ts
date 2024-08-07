@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -17,7 +17,7 @@ export class AuthService {
 
   }
 
-  public retornarDadosCep(cep:string) : Observable<any>{
+  public returnCepData(cep:string) : Observable<any>{
     let url:string = `https://viacep.com.br/ws/${cep}/json`;
     return this.http.get(url);
   }
