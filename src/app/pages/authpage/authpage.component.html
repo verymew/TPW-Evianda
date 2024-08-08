@@ -1,13 +1,11 @@
 <div class="main">
   <mat-card class="card">
 
-
-    <div class="content">
-
+    <div id="logim" class="content-login" *ngIf="isLogin">
       <div>
-      <img style="max-width: 300px;" mat-card-image src="logo.svg" alt="Photo of a Shiba Inu">
+        <img style="width: 250px;" mat-card-image src="logo.svg" alt="Photo of a Shiba Inu"><br>
       </div>
-      <div>
+      <div style="display: flex; flex-direction: column;">
         <mat-form-field class="login-field" appearance="outline">
           <mat-label>E-mail</mat-label>
           <input matInput>
@@ -20,7 +18,37 @@
             <mat-icon>{{hide() ? 'visibility_off' : 'visibility'}}</mat-icon>
           </button>
         </mat-form-field>
-        <button mat-stroked-button>Entrar</button>
+        <button mat-stroked-button>Entrar</button><br>
+        <div style="align-self:self-end">
+          <button onclick="" mat-button>Esqueci a senha</button><br>
+          <button (click)="changeStateLogin()" mat-button>Registrar</button>
+        </div>
+      </div>
+    </div>
+
+
+    <div id="registration" class="content-login" *ngIf="!isLogin">
+      <div>
+        <img style="width: 250px;" mat-card-image src="logo.svg" alt="Photo of a Shiba Inu"><br>
+      </div>
+      <div style="display: flex; flex-direction: column;">
+        <h1 style="text-align: center;">Cadastro</h1>
+        <mat-form-field class="login-field" appearance="outline">
+          <mat-label>E-mail</mat-label>
+          <input matInput>
+        </mat-form-field>
+        <mat-form-field class="login-field" appearance="outline">
+          <mat-label>Senha</mat-label>
+          <input matInput [type]="hide() ? 'password' : 'text'" />
+          <button mat-icon-button matSuffix (click)="clickEvent($event)" [attr.aria-label]="'Hide password'"
+            [attr.aria-pressed]="hide()">
+            <mat-icon>{{hide() ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </button>
+        </mat-form-field>
+        <button (click)="registerNewUser()" mat-stroked-button>Registrar</button><br>
+        <div style="align-self:self-end">
+          <button (click)="changeStateLogin()" mat-button>Voltar</button><br>
+        </div>
       </div>
     </div>
 
@@ -37,14 +65,10 @@
     background-color: #fbdeff;
   }
 
-  .content {
+  .content-login {
     display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-  }
-
-  .login-field {
-    width: 250px;
+    align-items: center;
+    justify-content: space-around;
   }
 
   .card {
