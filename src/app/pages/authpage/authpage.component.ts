@@ -36,7 +36,7 @@ export class AuthpageComponent {
     password : new FormControl(''),
   });
 
-  clickEvent(event: MouseEvent) {
+  public clickEvent(event: MouseEvent) {
     this.hide.set(!this.hide());
     event.stopPropagation();
   }
@@ -48,13 +48,18 @@ export class AuthpageComponent {
 
     if(email && password)
     {
-      this.auth.registerUser(email.trim(), password?.trim());
-      return alert('Registrado');
+      this.auth.registerUser(email.trim(), password?.trim())
+        .then(message => {
+          alert("registrado!");
+        })
+        .catch(error => {
+          alert(error);
+        })
     }
 
   }
 
-  public changeStateLogin()
+  public changeStateLogin(): void
   {
     this.isLogin = !this.isLogin;
   }

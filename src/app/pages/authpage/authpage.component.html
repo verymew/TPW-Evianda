@@ -29,24 +29,26 @@
 
     <div id="registration" class="content-login" *ngIf="!isLogin">
       <div>
-        <img style="width: 250px;" mat-card-image src="logo.svg" alt="Photo of a Shiba Inu"><br>
+        <img style="width: 250px;" mat-card-image src="logo.svg" alt="Logo">
       </div>
       <div style="display: flex; flex-direction: column;">
         <h1 style="text-align: center;">Cadastro</h1>
-        <mat-form-field class="login-field" appearance="outline">
-          <mat-label>E-mail</mat-label>
-          <input matInput>
-        </mat-form-field>
-        <mat-form-field class="login-field" appearance="outline">
-          <mat-label>Senha</mat-label>
-          <input matInput [type]="hide() ? 'password' : 'text'" />
-          <button mat-icon-button matSuffix (click)="clickEvent($event)" [attr.aria-label]="'Hide password'"
-            [attr.aria-pressed]="hide()">
-            <mat-icon>{{hide() ? 'visibility_off' : 'visibility'}}</mat-icon>
-          </button>
-        </mat-form-field>
-        <button (click)="registerNewUser()" mat-stroked-button>Registrar</button><br>
-        <div style="align-self:self-end">
+        <form style="display: flex; flex-direction: column;" [formGroup]="registration" (ngSubmit)="registerNewUser()">
+          <mat-form-field class="login-field" appearance="outline">
+            <mat-label>E-mail</mat-label>
+            <input matInput formControlName="email">
+          </mat-form-field>
+          <mat-form-field class="login-field" appearance="outline">
+            <mat-label>Senha</mat-label>
+            <input matInput [type]="hide() ? 'password' : 'text'" formControlName="password">
+            <button type="button" mat-icon-button matSuffix (click)="clickEvent($event)" [attr.aria-label]="'Hide password'"
+              [attr.aria-pressed]="hide()">
+              <mat-icon>{{hide() ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </button>
+          </mat-form-field>
+          <button type="submit" mat-stroked-button>Registrar</button><br>
+        </form>
+        <div style="align-self: flex-end;">
           <button (click)="changeStateLogin()" mat-button>Voltar</button><br>
         </div>
       </div>
@@ -63,6 +65,7 @@
     height: 100%;
     align-items: center;
     background-color: #fbdeff;
+    background-image: url('square-versatiles.svg');
   }
 
   .content-login {
