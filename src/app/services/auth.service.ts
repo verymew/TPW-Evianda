@@ -10,9 +10,17 @@ export class AuthService {
 
   private http =  inject(HttpClient);
   private auth = inject(AngularFireAuth)
+  private _usuarioLogado: any;
+
 
   constructor() {
 
+  }
+
+  public async isLogado() {
+    console.log(this.auth.currentUser);
+    this._usuarioLogado = await this.auth.authState;
+    return this._usuarioLogado != null;
   }
 
   public returnCepData(cep:string) : Observable<any>{
