@@ -3,6 +3,7 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { firstValueFrom, Observable } from 'rxjs';
 import { Firestore, collectionData } from '@angular/fire/firestore';
 import { collection, query, where, getDocs, doc, setDoc, deleteDoc, getDoc, updateDoc } from "firebase/firestore";
+import { HttpClient } from '@angular/common/http';
 
 
 @Injectable({
@@ -11,6 +12,7 @@ import { collection, query, where, getDocs, doc, setDoc, deleteDoc, getDoc, upda
 export class ViandaService {
   private firestore = inject(Firestore);
   private auth = inject(AngularFireAuth);
+  private http = inject(HttpClient);
 
   constructor() {
   }
@@ -72,5 +74,10 @@ export class ViandaService {
   async editVianda(viandaid: string, data:any): Promise<void> {
     const viandaRef = doc(this.firestore, 'cardapio', viandaid);
     await updateDoc(viandaRef, data);
+  }
+
+  public returnCatImage(): Observable<any> {
+    let url: string = `https://api.thecatapi.com/v1/images/search?limit=1`;
+    return this.http.get(url);
   }
 }

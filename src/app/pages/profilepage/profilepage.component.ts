@@ -25,6 +25,7 @@ export class ProfilepageComponent {
   public viandaAvailable: boolean = false;
   public isEditing: boolean = false;
   public vianda: any = null;
+  public profileImg: any = "";
 
   handleSave(data: any) {
     this.crud.saveVianda(data)
@@ -39,6 +40,8 @@ export class ProfilepageComponent {
         this.vianda = data;
       })
       .catch((err) => this.viandaAvailable = false);
+
+    this.crud.returnCatImage().subscribe((data) => { this.profileImg = data[0].url });
   };
 
   removeVianda(userid: string) {
