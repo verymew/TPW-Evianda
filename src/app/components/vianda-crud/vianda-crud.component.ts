@@ -26,6 +26,7 @@ export class ViandaCrudComponent {
     cidade: new FormControl('', Validators.required),
     cardapio: new FormControl('', Validators.required),
     whatsapp: new FormControl(''),
+    id: new FormControl(''),
   });
 
   isLinear = true;

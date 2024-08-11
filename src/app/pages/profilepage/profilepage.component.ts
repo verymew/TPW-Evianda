@@ -10,8 +10,6 @@ import { ViandaCrudComponent } from '../../components/vianda-crud/vianda-crud.co
 import { ViandaService } from '../../services/vianda.service';
 import { Router } from '@angular/router';
 
-
-
 @Component({
   selector: 'app-profilepage',
   standalone: true,
@@ -20,11 +18,12 @@ import { Router } from '@angular/router';
   styleUrl: './profilepage.component.css'
 })
 export class ProfilepageComponent {
+  private crud = inject(ViandaService);
+  private router = inject(Router)
   readonly panelOpenState = signal(false);
   public userName: string = "Julia";
   public viandaAvailable: boolean = false;
-  private crud = inject(ViandaService);
-  private router = inject(Router)
+  public isEditing: boolean = false;
   public vianda: any = null;
 
   handleSave(data: any) {
@@ -49,8 +48,16 @@ export class ProfilepageComponent {
       .catch((error) => console.log(error));
   };
 
-  editVianda(){
+  editVianda() {
+    this.isEditing = !this.isEditing;
+  }
 
+  updateVianda(data:any)
+  {
+    const viandaId = data.id;
+    this.crud.editVianda(viandaId, data)
+      .then((res) => { window.location.reload() })
+      .catch((err) => console.error(err));
   }
 
 }

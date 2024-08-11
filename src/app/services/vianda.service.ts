@@ -2,7 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { firstValueFrom, Observable } from 'rxjs';
 import { Firestore, collectionData } from '@angular/fire/firestore';
-import { collection, query, where, getDocs, doc, setDoc, deleteDoc, getDoc } from "firebase/firestore";
+import { collection, query, where, getDocs, doc, setDoc, deleteDoc, getDoc, updateDoc } from "firebase/firestore";
 
 
 @Injectable({
@@ -10,10 +10,7 @@ import { collection, query, where, getDocs, doc, setDoc, deleteDoc, getDoc } fro
 })
 export class ViandaService {
   private firestore = inject(Firestore);
-  private collectionName = 'cardapio';
   private auth = inject(AngularFireAuth);
-  private userid: string = "";
-
 
   constructor() {
   }
@@ -42,7 +39,7 @@ export class ViandaService {
       const docRef = collection(this.firestore, "cardapio");
       const q = query(docRef, where("userid", "==", user.uid));
       const querySnapshot = await getDocs(q);
-      if(querySnapshot.empty){
+      if (querySnapshot.empty) {
         throw Error("Vazia");
       }
       const firstDoc = querySnapshot.docs[0];
@@ -53,37 +50,27 @@ export class ViandaService {
         };
         return data;
       }
-      } catch (error) {
-        throw error;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async deleteVianda(userid: string): Promise<any> {
+    try {
+      const docRef = collection(this.firestore, "cardapio");
+      const q = query(docRef, where("userid", "==", userid));
+      const querySnapshot = await getDocs(q);
+      for (const docSnapshot of querySnapshot.docs) {
+        await deleteDoc(doc(this.firestore, 'cardapio', docSnapshot.id));
+        console.log(`Documento com ID ${docSnapshot.id} deletado com sucesso.`);
       }
+    } catch (error) {
+      throw error;
     }
-
-  async deleteVianda(userid: string): Promise < any > {
-      try {
-        const docRef = collection(this.firestore, "cardapio");
-        const q = query(docRef, where("userid", "==", userid));
-        const querySnapshot = await getDocs(q);
-        for(const docSnapshot of querySnapshot.docs) {
-      await deleteDoc(doc(this.firestore, 'cardapio', docSnapshot.id));
-      console.log(`Documento com ID ${docSnapshot.id} deletado com sucesso.`);
-    }
-  } catch(error) {
-    console.log(error);
   }
-}
 
-  async editVianda(userid: string): Promise < any > {
-  try{
-    const docRef = collection(this.firestore, "cardapio");
-    const q = query(docRef, where("userid", "==", userid));
-    const querySnapshot = await getDocs(q);
-    return querySnapshot.docs.map(doc => ({
-      id: doc.id,
-      ...doc.data()
-    }));
-
-  }catch(error) {
-
+  async editVianda(viandaid: string, data:any): Promise<void> {
+    const viandaRef = doc(this.firestore, 'cardapio', viandaid);
+    await updateDoc(viandaRef, data);
   }
-}
 }

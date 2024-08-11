@@ -27,7 +27,18 @@
                 Sobre minha vianda
               </mat-panel-description>
             </mat-expansion-panel-header>
-            @if (viandaAvailable) {
+
+            @if(isEditing){
+            <app-vianda-crud (save)="updateVianda($event)" [initialData]="vianda"></app-vianda-crud>
+            <div class="group-buttons" style="text-align: center; padding: 10px 10px;">
+              <button (click)="editVianda()" mat-stroked-button>
+                Voltar
+                <mat-icon>arrow_back</mat-icon>
+              </button>
+            </div>
+            }
+
+            @if (viandaAvailable && !isEditing) {
             <div name="info-vianda">
               <div>
                 <p>Nome da vianda: {{vianda.nomevianda}}</p>
@@ -35,7 +46,7 @@
                 <p>Bairro: {{vianda.bairro}}</p>
                 <p>Cep: {{vianda.cep}}</p>
                 <p>Cardápio: {{vianda.cardapio}}</p>
-                <p>Whatsapp: {{vianda.id}}</p>
+                <p>Whatsapp: {{vianda.whatsapp}}</p>
               </div>
               <div>
                 <div class="group-buttons" style="text-align: center; padding: 10px 10px;">
@@ -43,18 +54,21 @@
                     Remover
                     <mat-icon>delete_forever</mat-icon>
                   </button>
-                  <button mat-stroked-button>
+                  <button (click)="editVianda()" mat-stroked-button>
                     Editar
                     <mat-icon>edit</mat-icon>
                   </button>
                 </div>
               </div>
             </div>
-            } @else {
+            }
+
+            @if(!viandaAvailable && !isEditing){
             <div>
               <app-vianda-crud (save)="handleSave($event)"></app-vianda-crud>
             </div>
             }
+
           </mat-expansion-panel>
 
           <mat-expansion-panel (opened)="panelOpenState.set(true)" (closed)="panelOpenState.set(false)">
