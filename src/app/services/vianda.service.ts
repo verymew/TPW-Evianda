@@ -34,8 +34,13 @@ export class ViandaService {
 
   async getUserTasks(): Promise<any> {
     try{
+      const user = await this.auth.currentUser;
+      if (user === null) {
+        console.error('Usuário não autenticado');
+        return null;
+      }
       const docRef = collection(this.firestore, "cardapio");
-      const q = query(docRef, where("nomevianda", "==", "cxzczxcx"));
+      const q = query(docRef, where("userid", "==", user.uid));
       const querySnapshot = await getDocs(q);
       return querySnapshot.docs[0].data();
     } catch(error)
