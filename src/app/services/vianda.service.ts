@@ -2,7 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { firstValueFrom, Observable } from 'rxjs';
 import { Firestore, collectionData } from '@angular/fire/firestore';
-import { collection, query, where, getDocs, doc, setDoc, deleteDoc } from "firebase/firestore";
+import { collection, query, where, getDocs, doc, setDoc, deleteDoc, getDoc } from "firebase/firestore";
 
 
 @Injectable({
@@ -42,24 +42,27 @@ export class ViandaService {
       const docRef = collection(this.firestore, "cardapio");
       const q = query(docRef, where("userid", "==", user.uid));
       const querySnapshot = await getDocs(q);
+      if(querySnapshot.empty)
+      {
+        throw Error("Vazioooooooo");
+      }
       return querySnapshot.docs[0].data();
     } catch (error) {
-      console.log(error);
+      throw error;
     }
   }
 
-  async deleteVianda(): Promise<any> {
+  async deleteVianda(userid:string): Promise<any> {
     try {
-      const user = await this.auth.currentUser;
-      if (user === null) {
-        console.error('Usuário não autenticado');
-        return null;
-      }
       const docRef = collection(this.firestore, "cardapio");
-      const q = query(docRef, where("userid", "==", user.uid));
+      const q = query(docRef, where("userid", "==", userid));
       const querySnapshot = await getDocs(q);
+      for (const docSnapshot of querySnapshot.docs) {
+        await deleteDoc(doc(this.firestore, 'cardapio', docSnapshot.id));
+        console.log(`Documento com ID ${docSnapshot.id} deletado com sucesso.`);
+      }
     } catch (error) {
-
+      console.log(error);
     }
   }
 }

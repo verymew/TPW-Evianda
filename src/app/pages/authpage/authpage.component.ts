@@ -70,7 +70,4 @@ export class AuthpageComponent {
   public changeStateLogin(): void {
     this.isLogin = !this.isLogin;
   }
-
-
-
 }

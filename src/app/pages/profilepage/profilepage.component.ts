@@ -36,13 +36,17 @@ export class ProfilepageComponent {
       .then((data) => {
         this.viandaAvailable = true;
         this.vianda = data;
-        console.log(this.vianda.cidade);
-
       })
       .catch((erro) => {
-
+        console.error(erro);
       })
       .finally();
-  }
+  };
+
+  removeVianda(userid: string) {
+    this.crud.deleteVianda(userid)
+      .then((res) => alert('Deletado com sucesso'))
+      .catch((error) => console.log(error));
+  };
 
 }
