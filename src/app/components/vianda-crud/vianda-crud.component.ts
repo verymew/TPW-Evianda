@@ -33,6 +33,7 @@ export class ViandaCrudComponent {
   onSave() {
     if (!this.form.valid) {
       this.form.markAllAsTouched();
+      console.log('erro');
     }
     this.save.emit(this.form.value);
   }
