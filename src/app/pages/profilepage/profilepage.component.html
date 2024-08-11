@@ -30,14 +30,12 @@
             @if (viandaAvailable) {
             <div name="info-vianda">
               <div>
-                <p>Nome da vianda: </p>
-                <p>Endereço: </p>
-                <p>Cep: </p>
-                <p>Cidade: </p>
-                <p>Descrição:</p>
-                <p>Whatsapp: </p>
-                <p>Instagram: </p>
-                <p>Facebook: </p>
+                <p>Nome da vianda: {{vianda.nomevianda}}</p>
+                <p>Cidade: {{vianda.cidade}}</p>
+                <p>Bairro: {{vianda.bairro}}</p>
+                <p>Cep: {{vianda.cep}}</p>
+                <p>Cardápio: {{vianda.cardapio}}</p>
+                <p>Whatsapp: {{vianda.id}}</p>
               </div>
               <div>
                 <div class="group-buttons" style="text-align: center; padding: 10px 10px;">

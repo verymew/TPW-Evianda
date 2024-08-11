@@ -2,7 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { firstValueFrom, Observable } from 'rxjs';
 import { Firestore, collectionData } from '@angular/fire/firestore';
-import { collection, query, where, getDocs, doc, setDoc } from "firebase/firestore";
+import { collection, query, where, getDocs, doc, setDoc, deleteDoc } from "firebase/firestore";
 
 
 @Injectable({
@@ -12,7 +12,7 @@ export class ViandaService {
   private firestore = inject(Firestore);
   private collectionName = 'cardapio';
   private auth = inject(AngularFireAuth);
-  private userid:string = "";
+  private userid: string = "";
 
   constructor() {
   }
@@ -32,8 +32,8 @@ export class ViandaService {
     }
   }
 
-  async getUserTasks(): Promise<any> {
-    try{
+  async getVianda(): Promise<any> {
+    try {
       const user = await this.auth.currentUser;
       if (user === null) {
         console.error('Usuário não autenticado');
@@ -43,19 +43,23 @@ export class ViandaService {
       const q = query(docRef, where("userid", "==", user.uid));
       const querySnapshot = await getDocs(q);
       return querySnapshot.docs[0].data();
-    } catch(error)
-    {
+    } catch (error) {
       console.log(error);
     }
   }
 
-  async getUserid() : Promise<void>
-  {
-    const user = await this.auth.currentUser;
+  async deleteVianda(): Promise<any> {
+    try {
+      const user = await this.auth.currentUser;
+      if (user === null) {
+        console.error('Usuário não autenticado');
+        return null;
+      }
+      const docRef = collection(this.firestore, "cardapio");
+      const q = query(docRef, where("userid", "==", user.uid));
+      const querySnapshot = await getDocs(q);
+    } catch (error) {
 
+    }
   }
-
-
-
-
 }
