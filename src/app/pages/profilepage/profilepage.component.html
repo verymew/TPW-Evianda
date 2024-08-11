@@ -27,7 +27,8 @@
                 Sobre minha vianda
               </mat-panel-description>
             </mat-expansion-panel-header>
-            <div name="info-vianda" *ngif="">
+            @if (viandaAvailable) {
+            <div name="info-vianda">
               <div>
                 <p>Nome da vianda: </p>
                 <p>Endereço: </p>
@@ -51,6 +52,11 @@
                 </div>
               </div>
             </div>
+            } @else {
+            <div>
+              <app-vianda-crud (save)="handleSave($event)"></app-vianda-crud>
+            </div>
+            }
           </mat-expansion-panel>
 
           <mat-expansion-panel (opened)="panelOpenState.set(true)" (closed)="panelOpenState.set(false)">
@@ -61,6 +67,7 @@
             </mat-expansion-panel-header>
             <p>I'm visible because I am open</p>
           </mat-expansion-panel>
+
         </mat-accordion>
 
       </div>
@@ -71,9 +78,9 @@
 
 <style>
   .main {
+    min-height: 100%;
     display: flex;
     justify-content: center;
-    height: 100%;
     align-items: center;
     background-color: #fbdeff;
     background-image: url('square-versatiles.svg');
