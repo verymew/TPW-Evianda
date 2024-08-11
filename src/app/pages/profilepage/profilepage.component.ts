@@ -8,6 +8,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
 import { ViandaCrudComponent } from '../../components/vianda-crud/vianda-crud.component';
 import { ViandaService } from '../../services/vianda.service';
+import { Router } from '@angular/router';
 
 
 
@@ -23,11 +24,12 @@ export class ProfilepageComponent {
   public userName: string = "Julia";
   public viandaAvailable: boolean = false;
   private crud = inject(ViandaService);
+  private router = inject(Router)
   public vianda: any = null;
 
   handleSave(data: any) {
     this.crud.saveVianda(data)
-      .then(data => console.log("foii"))
+      .then(data => window.location.reload())
       .catch(err => console.error(err));
   }
 
@@ -37,16 +39,18 @@ export class ProfilepageComponent {
         this.viandaAvailable = true;
         this.vianda = data;
       })
-      .catch((erro) => {
-        console.error(erro);
-      })
-      .finally();
+      .catch((err) => this.viandaAvailable = false);
   };
 
   removeVianda(userid: string) {
     this.crud.deleteVianda(userid)
-      .then((res) => alert('Deletado com sucesso'))
+      .then((res) => window.location.reload()
+      )
       .catch((error) => console.log(error));
   };
+
+  editVianda(){
+
+  }
 
 }

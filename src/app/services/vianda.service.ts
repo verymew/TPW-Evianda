@@ -14,6 +14,7 @@ export class ViandaService {
   private auth = inject(AngularFireAuth);
   private userid: string = "";
 
+
   constructor() {
   }
 
@@ -27,7 +28,6 @@ export class ViandaService {
         return await setDoc(docRef, data);
       }
     } catch (error) {
-      console.error('Erro ao salvar vianda:', error);
       throw error;
     }
   }
@@ -42,27 +42,48 @@ export class ViandaService {
       const docRef = collection(this.firestore, "cardapio");
       const q = query(docRef, where("userid", "==", user.uid));
       const querySnapshot = await getDocs(q);
-      if(querySnapshot.empty)
-      {
-        throw Error("Vazioooooooo");
+      if(querySnapshot.empty){
+        throw Error("Vazia");
       }
-      return querySnapshot.docs[0].data();
-    } catch (error) {
-      throw error;
+      const firstDoc = querySnapshot.docs[0];
+      if (firstDoc) {
+        const data = {
+          id: firstDoc.id,
+          ...firstDoc.data()
+        };
+        return data;
+      }
+      } catch (error) {
+        throw error;
+      }
     }
-  }
 
-  async deleteVianda(userid:string): Promise<any> {
-    try {
-      const docRef = collection(this.firestore, "cardapio");
-      const q = query(docRef, where("userid", "==", userid));
-      const querySnapshot = await getDocs(q);
-      for (const docSnapshot of querySnapshot.docs) {
-        await deleteDoc(doc(this.firestore, 'cardapio', docSnapshot.id));
-        console.log(`Documento com ID ${docSnapshot.id} deletado com sucesso.`);
-      }
-    } catch (error) {
-      console.log(error);
+  async deleteVianda(userid: string): Promise < any > {
+      try {
+        const docRef = collection(this.firestore, "cardapio");
+        const q = query(docRef, where("userid", "==", userid));
+        const querySnapshot = await getDocs(q);
+        for(const docSnapshot of querySnapshot.docs) {
+      await deleteDoc(doc(this.firestore, 'cardapio', docSnapshot.id));
+      console.log(`Documento com ID ${docSnapshot.id} deletado com sucesso.`);
     }
+  } catch(error) {
+    console.log(error);
   }
+}
+
+  async editVianda(userid: string): Promise < any > {
+  try{
+    const docRef = collection(this.firestore, "cardapio");
+    const q = query(docRef, where("userid", "==", userid));
+    const querySnapshot = await getDocs(q);
+    return querySnapshot.docs.map(doc => ({
+      id: doc.id,
+      ...doc.data()
+    }));
+
+  }catch(error) {
+
+  }
+}
 }

@@ -53,8 +53,7 @@ export class AuthpageComponent {
   }
 
   public registerNewUser(): void {
-    const email = this.registration.get('email')?.value;
-    const password = this.registration.get('password')?.value;
+    const { email, password } = this.registration.value;
 
     if (email && password) {
       this.auth.registerUser(email.trim(), password?.trim())
