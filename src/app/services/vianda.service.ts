@@ -64,14 +64,13 @@ export class ViandaService {
       const querySnapshot = await getDocs(q);
       for (const docSnapshot of querySnapshot.docs) {
         await deleteDoc(doc(this.firestore, 'cardapio', docSnapshot.id));
-        console.log(`Documento com ID ${docSnapshot.id} deletado com sucesso.`);
       }
     } catch (error) {
       throw error;
     }
   }
 
-  async editVianda(viandaid: string, data:any): Promise<void> {
+  async editVianda(viandaid: string, data: any): Promise<void> {
     const viandaRef = doc(this.firestore, 'cardapio', viandaid);
     await updateDoc(viandaRef, data);
   }
