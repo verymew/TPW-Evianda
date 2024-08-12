@@ -1,21 +1,11 @@
 <div class="navbar-div">
-  <button mat-button>Saiba mais</button>
-  <button mat-button>Procurar</button>
-  <button mat-button>Inicio</button>
+  <button mat-button [routerLink]="['/profile']">
+    <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="key"></mat-icon>
+    Conta
+  </button>
 
+  <button mat-button [routerLink]="['/']">
+    <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="home"></mat-icon>
+    Início
+  </button>
 </div>
-
-<style>
-  .navbar-div
-  {
-    background-color: #f27892 ;
-    height: 50px;
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-  }
-  .navbar-div button
-  {
-
-  }
-</style>
