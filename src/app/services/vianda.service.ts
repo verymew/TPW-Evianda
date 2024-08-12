@@ -71,8 +71,12 @@ export class ViandaService {
   }
 
   async editVianda(viandaid: string, data: any): Promise<void> {
-    const viandaRef = doc(this.firestore, 'cardapio', viandaid);
-    await updateDoc(viandaRef, data);
+    try{
+      const viandaRef = doc(this.firestore, 'cardapio', viandaid);
+      await updateDoc(viandaRef, data);
+    } catch(err){
+      throw err;
+    }
   }
 
   public returnCatImage(): Observable<any> {
