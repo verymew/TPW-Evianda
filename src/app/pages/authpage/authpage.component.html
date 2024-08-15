@@ -21,6 +21,7 @@
           </mat-form-field>
           <button type="submit" mat-stroked-button>Log-in</button><br>
         </form>
+        <button (click)="changeStateLogin()" mat-button>Cadastrar-se</button>
       </div>
     </div>
 
@@ -30,11 +31,12 @@
         <img style="width: 250px;" mat-card-image src="logo.svg" alt="Logo">
       </div>
       <div style="display: flex; flex-direction: column;">
-        <h1 style="text-align: center;">Cadastro</h1>
+        <h1 style="text-align: center; font-family: monospace; color: #a22159;">Cadastro</h1>
         <form style="display: flex; flex-direction: column;" [formGroup]="registration" (ngSubmit)="registerNewUser()">
           <mat-form-field class="login-field" appearance="outline">
             <mat-label>E-mail</mat-label>
             <input matInput formControlName="email">
+
           </mat-form-field>
           <mat-form-field class="login-field" appearance="outline">
             <mat-label>Senha</mat-label>
