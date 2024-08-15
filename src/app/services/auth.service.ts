@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { map, Observable } from 'rxjs';
+import { getAuth, signOut } from "firebase/auth";
 
 @Injectable({
   providedIn: 'root'
@@ -35,6 +36,13 @@ export class AuthService {
 
   public login(email: string, password: string): Promise<any> {
     return this.auth.signInWithEmailAndPassword(email, password);
+  }
+
+  public signOut() : Promise<any>
+  {
+    const auth = getAuth();
+    return signOut(auth)
+      .catch(() => { throw new Error('Erro ao deslogar.') })
   }
 
 }
