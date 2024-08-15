@@ -1,0 +1,21 @@
+.main {
+  display: flex;
+  justify-content: center;
+  height: 100%;
+  align-items: center;
+  background-color: #fbdeff;
+  background-image: url('/square-versatiles.svg');
+}
+
+.content-login {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.card {
+  width: 50%;
+  height: 500px;
+  display: flex;
+  justify-content: center;
+}

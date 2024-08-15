@@ -1,0 +1,12 @@
+.navbar-div {
+  background-color: #f27892;
+  height: 55px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+a {
+  text-decoration: none;
+  color: #ba005c;
+}

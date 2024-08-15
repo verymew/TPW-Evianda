@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatFormField } from '@angular/material/form-field';
@@ -10,11 +10,12 @@ import { MatDividerModule } from '@angular/material/divider';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
+import { InputErrorComponent } from '../../components/input-error/input-error.component';
 
 @Component({
   selector: 'app-authpage',
   standalone: true,
-  imports: [MatCardModule, ReactiveFormsModule, MatFormFieldModule, MatFormField, MatIconModule, MatInputModule, MatButtonModule, MatDividerModule, CommonModule],
+  imports: [InputErrorComponent, MatCardModule, ReactiveFormsModule, MatFormFieldModule, MatFormField, MatIconModule, MatInputModule, MatButtonModule, MatDividerModule, CommonModule],
   templateUrl: './authpage.component.html',
   styleUrl: './authpage.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -29,13 +30,13 @@ export class AuthpageComponent {
   }
 
   registration = new FormGroup({
-    email: new FormControl(''),
-    password: new FormControl(''),
+    email: new FormControl('', Validators.required),
+    password: new FormControl('', Validators.required),
   });
 
   login = new FormGroup({
-    email: new FormControl(''),
-    password: new FormControl(''),
+    email: new FormControl('', Validators.required),
+    password: new FormControl('', Validators.required),
   });
 
   public clickEvent(event: MouseEvent) {
@@ -53,8 +54,7 @@ export class AuthpageComponent {
   }
 
   public registerNewUser(): void {
-    const email = this.registration.get('email')?.value;
-    const password = this.registration.get('password')?.value;
+    const { email, password } = this.registration.value;
 
     if (email && password) {
       this.auth.registerUser(email.trim(), password?.trim())
@@ -70,7 +70,4 @@ export class AuthpageComponent {
   public changeStateLogin(): void {
     this.isLogin = !this.isLogin;
   }
-
-
-
 }

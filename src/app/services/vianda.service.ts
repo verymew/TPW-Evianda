@@ -2,7 +2,8 @@ import { inject, Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { firstValueFrom, Observable } from 'rxjs';
 import { Firestore, collectionData } from '@angular/fire/firestore';
-import { collection, query, where, getDocs, doc, setDoc } from "firebase/firestore";
+import { collection, query, where, getDocs, doc, setDoc, deleteDoc, getDoc, updateDoc } from "firebase/firestore";
+import { HttpClient } from '@angular/common/http';
 
 
 @Injectable({
@@ -10,9 +11,8 @@ import { collection, query, where, getDocs, doc, setDoc } from "firebase/firesto
 })
 export class ViandaService {
   private firestore = inject(Firestore);
-  private collectionName = 'cardapio';
   private auth = inject(AngularFireAuth);
-  private userid:string = "";
+  private http = inject(HttpClient);
 
   constructor() {
   }
@@ -27,13 +27,12 @@ export class ViandaService {
         return await setDoc(docRef, data);
       }
     } catch (error) {
-      console.error('Erro ao salvar vianda:', error);
       throw error;
     }
   }
 
-  async getUserTasks(): Promise<any> {
-    try{
+  async getVianda(): Promise<any> {
+    try {
       const user = await this.auth.currentUser;
       if (user === null) {
         console.error('Usuário não autenticado');
@@ -42,20 +41,46 @@ export class ViandaService {
       const docRef = collection(this.firestore, "cardapio");
       const q = query(docRef, where("userid", "==", user.uid));
       const querySnapshot = await getDocs(q);
-      return querySnapshot.docs[0].data();
-    } catch(error)
-    {
-      console.log(error);
+      if (querySnapshot.empty) {
+        throw Error("Vazia");
+      }
+      const firstDoc = querySnapshot.docs[0];
+      if (firstDoc) {
+        const data = {
+          id: firstDoc.id,
+          ...firstDoc.data()
+        };
+        return data;
+      }
+    } catch (error) {
+      throw error;
     }
   }
 
-  async getUserid() : Promise<void>
-  {
-    const user = await this.auth.currentUser;
-
+  async deleteVianda(userid: string): Promise<any> {
+    try {
+      const docRef = collection(this.firestore, "cardapio");
+      const q = query(docRef, where("userid", "==", userid));
+      const querySnapshot = await getDocs(q);
+      for (const docSnapshot of querySnapshot.docs) {
+        await deleteDoc(doc(this.firestore, 'cardapio', docSnapshot.id));
+      }
+    } catch (error) {
+      throw error;
+    }
   }
 
+  async editVianda(viandaid: string, data: any): Promise<void> {
+    try{
+      const viandaRef = doc(this.firestore, 'cardapio', viandaid);
+      await updateDoc(viandaRef, data);
+    } catch(err){
+      throw err;
+    }
+  }
 
-
-
+  public returnCatImage(): Observable<any> {
+    let url: string = `https://api.thecatapi.com/v1/images/search?limit=1`;
+    return this.http.get(url);
+  }
 }

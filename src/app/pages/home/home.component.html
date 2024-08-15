@@ -1,11 +1,17 @@
-
 <main>
   <header>
     <div style="margin-right: 40px;">
-      <img src="logo.svg" alt="Minha Figura">
+      <img id="logo" src="logo.svg" alt="Minha Figura">
     </div>
-    <div>
-      <h1>E-vianda</h1>
+    <div class="vianda-header">
+      <span style="color: rgb(255, 255, 255);">E</span><span style="color: rgb(99, 7, 53);">-vianda</span>
+      <br>
+      <div class="search-bar" style="margin-top: 20px; display: flex; justify-content: center;">
+          <mat-form-field appearance="outline" class="example-full-width">
+            <input matInput placeholder="Ex. Porto Alegre, RS">
+          </mat-form-field>
+          <button style="margin: 0 10px; height: 55px;" mat-flat-button>Buscar<mat-icon>search</mat-icon></button>
+      </div>
     </div>
   </header>
 
@@ -14,14 +20,3 @@
   </div>
 </main>
 
-<style>
-  header
-  {
-    display: flex;
-    height: 700px;
-    background-image: url(clean.svg);
-    background-size: cover;
-    justify-content: center;
-    align-items: center;
-  }
-</style>

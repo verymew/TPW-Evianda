@@ -4,9 +4,10 @@
     <div class="content">
       <div>
       </div>
-      <div style="padding: 25px; text-align: center;">
-        <img src="ball.svg" alt="Minha Figura">
-        <h3>{{userName}}</h3>
+      <div style="padding: 25px; display: flex; flex-direction: column; align-items: center;">
+        <div style="width: 180px; height: 180px; background-image: url({{profileImg}}); background-size: cover; border-radius: 50%;"></div>
+        <h3>{{userName}} {{ fruit | fruits }}</h3>
+
       </div>
 
       <div style="padding: 25px 25px;">
@@ -27,36 +28,48 @@
                 Sobre minha vianda
               </mat-panel-description>
             </mat-expansion-panel-header>
-            @if (viandaAvailable) {
+
+            @if(isEditing){
+            <app-vianda-crud (save)="updateVianda($event)" [initialData]="vianda"></app-vianda-crud>
+            <div class="group-buttons" style="text-align: center; padding: 10px 10px;">
+              <button (click)="editVianda()" mat-stroked-button>
+                Voltar
+                <mat-icon>arrow_back</mat-icon>
+              </button>
+            </div>
+            }
+
+            @if (viandaAvailable && !isEditing) {
             <div name="info-vianda">
               <div>
-                <p>Nome da vianda: </p>
-                <p>Endereço: </p>
-                <p>Cep: </p>
-                <p>Cidade: </p>
-                <p>Descrição:</p>
-                <p>Whatsapp: </p>
-                <p>Instagram: </p>
-                <p>Facebook: </p>
+                <p>Nome da vianda: {{vianda.nomevianda}}</p>
+                <p>Cidade: {{vianda.cidade}}</p>
+                <p>Bairro: {{vianda.bairro}}</p>
+                <p>Cep: {{vianda.cep}}</p>
+                <p>Cardápio: {{vianda.cardapio}}</p>
+                <p>Whatsapp: {{vianda.whatsapp}}</p>
               </div>
               <div>
                 <div class="group-buttons" style="text-align: center; padding: 10px 10px;">
-                  <button mat-stroked-button>
+                  <button (click)="removeVianda(vianda.userid)" mat-stroked-button>
                     Remover
                     <mat-icon>delete_forever</mat-icon>
                   </button>
-                  <button mat-stroked-button>
+                  <button (click)="editVianda()" mat-stroked-button>
                     Editar
                     <mat-icon>edit</mat-icon>
                   </button>
                 </div>
               </div>
             </div>
-            } @else {
+            }
+
+            @if(!viandaAvailable && !isEditing){
             <div>
               <app-vianda-crud (save)="handleSave($event)"></app-vianda-crud>
             </div>
             }
+
           </mat-expansion-panel>
 
           <mat-expansion-panel (opened)="panelOpenState.set(true)" (closed)="panelOpenState.set(false)">
@@ -65,7 +78,7 @@
               <mat-panel-description>
               </mat-panel-description>
             </mat-expansion-panel-header>
-            <p>I'm visible because I am open</p>
+            <button (click)="logOut()" mat-button>Deslogar</button>
           </mat-expansion-panel>
 
         </mat-accordion>
@@ -76,29 +89,4 @@
 
 </div>
 
-<style>
-  .main {
-    min-height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #fbdeff;
-    background-image: url('square-versatiles.svg');
-  }
 
-  .card {
-    margin: 20px 20px;
-    height: 75%;
-    width: 50%;
-  }
-
-  .group-buttons button {
-    margin: 10px 10px;
-  }
-
-  @media (max-width: 600px) {
-    .card {
-      width: 80%;
-    }
-  }
-</style>

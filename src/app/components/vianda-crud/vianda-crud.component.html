@@ -11,6 +11,7 @@
       </mat-form-field>
       <br>
       <app-input-error label="Whatsapp" [control]="form.controls['whatsapp']" placeholder="Que amor" ></app-input-error>
+      <input type="hidden" formControlName="id"/>
       <div>
         <button mat-button matStepperNext>Avançar</button>
       </div>

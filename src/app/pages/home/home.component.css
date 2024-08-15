@@ -1,0 +1,36 @@
+header {
+  display: flex;
+  height: 700px;
+  background-image: url("/sun.svg");
+  background-size: cover;
+  justify-content: center;
+  align-items: center;
+}
+
+span {
+  font-family: "Inter", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 900;
+  font-style: normal;
+}
+
+.vianda-header {
+  font-size: 60px;
+}
+
+@media (max-width: 610px) {
+  header{
+    flex-direction: column;
+  }
+  .search-bar
+  {
+    flex-direction: column;
+  }
+  .vianda-header{
+    margin-top: 20px;
+  }
+  #logo
+  {
+    padding-left: 45px;
+  }
+}
