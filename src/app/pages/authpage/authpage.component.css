@@ -19,3 +19,15 @@
   display: flex;
   justify-content: center;
 }
+
+@media (max-width: 1000px) {
+  .content-login{
+    flex-direction: column;
+  }
+  .card{
+    width: 90%;
+    height: auto;
+    display: flex;
+    justify-content: center;
+  }
+}

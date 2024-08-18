@@ -1,0 +1,35 @@
+main {
+  display: flex;
+  justify-content: center;
+  height: 100%;
+  align-items: center;
+  background-color: #fbdeff;
+  background-image: url('/square-versatiles.svg');
+}
+
+.viandas {
+  width: 250px;
+  height: 150px;
+  margin: 15px 15px;
+}
+
+.content {
+  width: 70%;
+}
+
+.vianda-cards {
+  display: flex;
+}
+
+@media (max-width: 620px) {
+  .content {
+    width: 90%;
+    margin: 15px 15px;
+  }
+
+  .vianda-cards {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+}

@@ -30,10 +30,10 @@ export class SearchpageComponent implements OnInit{
         this.dataVianda = dados;
         if(this.dataVianda.length == 0)
         {
-          this.snack.open('Não há registros')
+          this.snack.open('Não há registros', '', {duration: 2000 })
         }
       } catch (error) {
-        this.snack.open('Erro' + error);
+        this.snack.open('Erro');
       }
     });
   }

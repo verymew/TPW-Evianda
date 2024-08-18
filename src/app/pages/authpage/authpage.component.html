@@ -6,10 +6,11 @@
         <img style="width: 250px;" mat-card-image src="logo.svg" alt="Photo of a Shiba Inu"><br>
       </div>
       <div style="display: flex; flex-direction: column;">
+        <h1 style="text-align: center; font-family: monospace; color: #a22159; text-shadow: 2px 2px #54102d;">Login</h1>
         <form style="display: flex; flex-direction: column;" [formGroup]="login" (ngSubmit)="userLogin()">
           <app-input-error label="E-mail" type="email" [control]="login.controls.email"></app-input-error>
           <app-input-error label="Password" type="password" [control]="login.controls.password" ></app-input-error>
-          <button style="margin: 10px 10px;" type="submit" mat-stroked-button>Log-in</button><br>
+          <button style="margin: 10px 10px;" type="submit" mat-stroked-button>Entrar</button><br>
         </form>
         <button (click)="changeStateLogin()" mat-button>Cadastrar-se</button>
       </div>
@@ -21,7 +22,7 @@
         <img style="width: 250px;" mat-card-image src="logo.svg" alt="Logo">
       </div>
       <div style="display: flex; flex-direction: column;">
-        <h1 style="text-align: center; font-family: monospace; color: #a22159;">Cadastro</h1>
+        <h1 style="text-align: center; font-family: monospace; color: #a22159; text-shadow: 2px 2px #54102d;">Cadastro</h1>
         <form style="display: flex; flex-direction: column; justify-content: center; align-items: center;" [formGroup]="registration" (ngSubmit)="registerNewUser()">
           <app-input-error label="E-mail"  type="email" [control]="registration.controls.email"></app-input-error>
 

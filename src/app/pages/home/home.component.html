@@ -8,15 +8,11 @@
       <br>
       <div class="search-bar" style="margin-top: 20px; display: flex; justify-content: center;">
           <mat-form-field appearance="outline" class="example-full-width">
-            <input matInput placeholder="Ex. Porto Alegre, RS">
+            <input  [formControl]="search"   matInput placeholder="Ex. Porto Alegre, RS">
           </mat-form-field>
-          <button style="margin: 0 10px; height: 55px;" mat-flat-button>Buscar<mat-icon>search</mat-icon></button>
+          <button (click)="searchTheCity()" style="margin: 0 10px; height: 55px;" mat-flat-button>Buscar<mat-icon>search</mat-icon></button>
       </div>
     </div>
   </header>
-
-  <div class="catalogo">
-
-  </div>
 </main>
 

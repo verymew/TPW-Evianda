@@ -12,6 +12,7 @@ import { Router } from '@angular/router';
 import { FruitsPipe } from "../../pipes/fruits.pipe";
 import { ProfileService } from '../../services/profile.service';
 import { AuthService } from '../../services/auth.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-profilepage',
@@ -25,6 +26,7 @@ export class ProfilepageComponent {
   private router = inject(Router);
   private profile = inject(ProfileService);
   private auth = inject(AuthService);
+  private snack = inject(MatSnackBar)
 
   readonly panelOpenState = signal(false);
   public userName: string = "Julia";
@@ -38,7 +40,8 @@ export class ProfilepageComponent {
   handleSave(data: any): void {
     this.crud.saveVianda(data)
       .then(data => window.location.reload())
-      .catch(err => console.error(err));
+      .catch(err => this.snack.open('Registrado!','', {duration: 2000})
+    );
   };
 
   ngOnInit(): void {
@@ -59,7 +62,8 @@ export class ProfilepageComponent {
     this.crud.deleteVianda(userid)
       .then((res) => window.location.reload()
       )
-      .catch((error) => alert(error));
+      .catch((error) => this.snack.open('Registrado!','', {duration: 2000})
+    );
   };
 
   editVianda(): void {
@@ -68,15 +72,16 @@ export class ProfilepageComponent {
 
   updateVianda(data: any): void {
     const viandaId = this.idVianda;
-    console.log(viandaId)
     this.crud.editVianda(viandaId, data)
       .then((res) => { window.location.reload() })
-      .catch((err) => console.error(err));
+      .catch((err) => this.snack.open('Registrado!','', {duration: 2000})
+    );
   };
 
   logOut(): void {
     this.auth.signOut()
       .then(() => window.location.reload())
-      .catch((error) => alert(error));
+      .catch((error) => this.snack.open('Registrado!','', {duration: 2000})
+    );
   };
 }
