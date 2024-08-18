@@ -5,12 +5,13 @@ import {MatListModule} from '@angular/material/list';
 import { ViandaService } from '../../services/vianda.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
+import { CommonModule } from '@angular/common';
 
 
 @Component({
   selector: 'app-searchpage',
   standalone: true,
-  imports: [MatCardModule, MatDividerModule, MatListModule],
+  imports: [MatCardModule, MatDividerModule, MatListModule, CommonModule],
   templateUrl: './searchpage.component.html',
   styleUrl: './searchpage.component.css'
 })
@@ -24,14 +25,15 @@ export class SearchpageComponent implements OnInit{
   async ngOnInit(): Promise<void> {
     this.route.paramMap.subscribe(async (params) => {
       this.cityName = params.get('city') || '';
-      console.log(this.cityName);
       try {
-        this.dataVianda = await this.viandaService.searchByCity(this.cityName);
-        this.dataVianda.forEach(item => {
-          console.log('ID: ' + item.id);
-        });
+        const dados = await this.viandaService.searchByCity(this.cityName);
+        this.dataVianda = dados;
+        if(this.dataVianda.length == 0)
+        {
+          this.snack.open('Não há registros')
+        }
       } catch (error) {
-        this.snack.open('Erro');
+        this.snack.open('Erro' + error);
       }
     });
   }
