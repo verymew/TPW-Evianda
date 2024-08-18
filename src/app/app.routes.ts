@@ -11,5 +11,5 @@ export const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'profile', component: ProfilepageComponent, canActivate: [authGuard] },
   { path: 'teste', component: ViandaCrudComponent },
-  { path: 'search', component: SearchpageComponent }
+  { path: 'search/:city', component: SearchpageComponent }
 ];

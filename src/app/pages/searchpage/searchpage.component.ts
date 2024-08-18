@@ -1,7 +1,11 @@
-import { Component,ChangeDetectionStrategy } from '@angular/core';
+import { Component,ChangeDetectionStrategy, OnInit, inject } from '@angular/core';
 import {MatCardModule} from '@angular/material/card';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatListModule} from '@angular/material/list';
+import { ViandaService } from '../../services/vianda.service';
+import {MatSnackBar} from '@angular/material/snack-bar';
+import { ActivatedRoute } from '@angular/router';
+
 
 @Component({
   selector: 'app-searchpage',
@@ -10,6 +14,26 @@ import {MatListModule} from '@angular/material/list';
   templateUrl: './searchpage.component.html',
   styleUrl: './searchpage.component.css'
 })
-export class SearchpageComponent {
+export class SearchpageComponent implements OnInit{
+  private viandaService =  inject(ViandaService);
+  private snack = inject(MatSnackBar);
+  private route = inject(ActivatedRoute);
+  public cityName: string = "";
+  public dataVianda: any[] = [];
+
+  async ngOnInit(): Promise<void> {
+    this.route.paramMap.subscribe(async (params) => {
+      this.cityName = params.get('city') || '';
+      console.log(this.cityName);
+      try {
+        this.dataVianda = await this.viandaService.searchByCity(this.cityName);
+        this.dataVianda.forEach(item => {
+          console.log('ID: ' + item.id);
+        });
+      } catch (error) {
+        this.snack.open('Erro');
+      }
+    });
+  }
 
 }

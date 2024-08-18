@@ -34,9 +34,8 @@ export class ViandaService {
   async getVianda(): Promise<any> {
     try {
       const user = await this.auth.currentUser;
-      if (user === null) {
-        console.error('Usuário não autenticado');
-        return null;
+      if (!user) {
+        throw new Error("Vazio")
       }
       const docRef = collection(this.firestore, "cardapio");
       const q = query(docRef, where("userid", "==", user.uid));
@@ -82,5 +81,19 @@ export class ViandaService {
   public returnCatImage(): Observable<any> {
     let url: string = `https://api.thecatapi.com/v1/images/search?limit=1`;
     return this.http.get(url);
+  }
+
+  async searchByCity(cidade: string): Promise<any> {
+    try {
+      const q = query(collection(this.firestore, "cardapio"), where("cidade", "==", cidade));
+      const querySnapshot = await getDocs(q);
+      const results = querySnapshot.docs.map(doc => ({
+        id: doc.id,
+        data: doc.data()
+      }));
+      return results;
+    } catch (error) {
+      throw error;
+    }
   }
 }
