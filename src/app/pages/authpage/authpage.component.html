@@ -7,19 +7,9 @@
       </div>
       <div style="display: flex; flex-direction: column;">
         <form style="display: flex; flex-direction: column;" [formGroup]="login" (ngSubmit)="userLogin()">
-          <mat-form-field class="login-field" appearance="outline">
-            <mat-label>E-mail</mat-label>
-            <input matInput formControlName="email">
-          </mat-form-field>
-          <mat-form-field class="login-field" appearance="outline">
-            <mat-label>Senha</mat-label>
-            <input matInput [type]="hide() ? 'password' : 'text'" formControlName="password">
-            <button type="button" mat-icon-button matSuffix (click)="clickEvent($event)"
-              [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide()">
-              <mat-icon>{{hide() ? 'visibility_off' : 'visibility'}}</mat-icon>
-            </button>
-          </mat-form-field>
-          <button type="submit" mat-stroked-button>Log-in</button><br>
+          <app-input-error label="E-mail" type="email" [control]="login.controls.email"></app-input-error>
+          <app-input-error label="Password" type="password" [control]="login.controls.password" ></app-input-error>
+          <button style="margin: 10px 10px;" type="submit" mat-stroked-button>Log-in</button><br>
         </form>
         <button (click)="changeStateLogin()" mat-button>Cadastrar-se</button>
       </div>
@@ -32,21 +22,12 @@
       </div>
       <div style="display: flex; flex-direction: column;">
         <h1 style="text-align: center; font-family: monospace; color: #a22159;">Cadastro</h1>
-        <form style="display: flex; flex-direction: column;" [formGroup]="registration" (ngSubmit)="registerNewUser()">
-          <mat-form-field class="login-field" appearance="outline">
-            <mat-label>E-mail</mat-label>
-            <input matInput formControlName="email">
+        <form style="display: flex; flex-direction: column; justify-content: center; align-items: center;" [formGroup]="registration" (ngSubmit)="registerNewUser()">
+          <app-input-error label="E-mail"  type="email" [control]="registration.controls.email"></app-input-error>
 
-          </mat-form-field>
-          <mat-form-field class="login-field" appearance="outline">
-            <mat-label>Senha</mat-label>
-            <input matInput [type]="hide() ? 'password' : 'text'" formControlName="password">
-            <button type="button" mat-icon-button matSuffix (click)="clickEvent($event)"
-              [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide()">
-              <mat-icon>{{hide() ? 'visibility_off' : 'visibility'}}</mat-icon>
-            </button>
-          </mat-form-field>
-          <button type="submit" mat-stroked-button>Registrar</button><br>
+          <app-input-error label="Password" type="password" [control]="registration.controls.password"></app-input-error>
+
+          <button style="margin: 10px 10px;" type="submit" mat-stroked-button>Registrar</button><br>
         </form>
         <div style="align-self: flex-end;">
           <button (click)="changeStateLogin()" mat-button>Voltar</button><br>

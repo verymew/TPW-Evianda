@@ -5,10 +5,7 @@
       <br>
       <app-input-error label="Nome da vianda" [control]="form.controls['nomevianda']" placeholder="Digite um nome..." ></app-input-error>
       <br>
-      <mat-form-field>
-        <mat-label>Cardápio</mat-label>
-        <textarea matInput formControlName="cardapio" placeholder="Ex. Feijão, carne assada, carreteiro..."></textarea>
-      </mat-form-field>
+      <app-input-error label="Cardápio" type="textarea" [control]="form.controls['cardapio']" placeholder="Ex: Arroz, feijão..." ></app-input-error>
       <br>
       <app-input-error label="Whatsapp" [control]="form.controls['whatsapp']" placeholder="Que amor" ></app-input-error>
       <input type="hidden" formControlName="id"/>
