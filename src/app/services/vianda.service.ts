@@ -48,7 +48,7 @@ export class ViandaService {
       if (firstDoc) {
         const data = {
           id: firstDoc.id,
-          ...firstDoc.data()
+          data: firstDoc.data()
         };
         return data;
       }

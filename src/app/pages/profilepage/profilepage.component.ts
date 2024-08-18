@@ -33,6 +33,7 @@ export class ProfilepageComponent {
   public vianda: any = null;
   public profileImg: any = "";
   public fruit: string = "";
+  public idVianda: string = "";
 
   handleSave(data: any): void {
     this.crud.saveVianda(data)
@@ -42,9 +43,10 @@ export class ProfilepageComponent {
 
   ngOnInit(): void {
     this.crud.getVianda()
-      .then((data) => {
+      .then((res) => {
         this.viandaAvailable = true;
-        this.vianda = data;
+        this.vianda = res.data;
+        this.idVianda = res.id;
       })
       .catch((err) => this.viandaAvailable = false);
 
@@ -65,7 +67,8 @@ export class ProfilepageComponent {
   };
 
   updateVianda(data: any): void {
-    const viandaId = data.id;
+    const viandaId = this.idVianda;
+    console.log(viandaId)
     this.crud.editVianda(viandaId, data)
       .then((res) => { window.location.reload() })
       .catch((err) => console.error(err));
