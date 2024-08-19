@@ -52,8 +52,6 @@ export class ProfilepageComponent {
         this.idVianda = res.id;
       })
       .catch((err) => this.viandaAvailable = false);
-    this.fruit = this.profile.randomFruit();
-
     this.userName = this.auth.getDisplayName();
 
     this.crud.returnCatImage().subscribe((data) => { this.profileImg = data[0].url });
