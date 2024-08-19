@@ -36,6 +36,7 @@ export class AuthpageComponent {
   registration = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', [Validators.required, Validators.minLength(6)]),
+    name: new FormControl('', [Validators.required])
   });
 
   login = new FormGroup({
@@ -58,15 +59,16 @@ export class AuthpageComponent {
   }
 
   public registerNewUser(): void {
-    const { email, password } = this.registration.value;
+    const { email, password, name } = this.registration.value;
 
-    if (email && password) {
-      this.auth.registerUser(email.trim(), password?.trim())
+    if (email && password && name) {
+      this.auth.registerUser(email.trim(), password?.trim(), name?.trim())
         .then(message => {
           this.snack.open('Registrado!','', {duration: 2000});
+          this.router.navigate([''])
         })
         .catch(error => {
-          this.snack.open('Erro','', {duration: 2000});
+          this.snack.open('Erro' + error,'', {duration: 2000});
         })
     }
   }

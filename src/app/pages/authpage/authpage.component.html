@@ -24,9 +24,10 @@
       <div style="display: flex; flex-direction: column;">
         <h1 style="text-align: center; font-family: monospace; color: #a22159; text-shadow: 2px 2px #54102d;">Cadastro</h1>
         <form style="display: flex; flex-direction: column; justify-content: center; align-items: center;" [formGroup]="registration" (ngSubmit)="registerNewUser()">
-          <app-input-error label="E-mail"  type="email" [control]="registration.controls.email"></app-input-error>
 
+          <app-input-error label="E-mail"  type="email" [control]="registration.controls.email"></app-input-error>
           <app-input-error label="Password" type="password" [control]="registration.controls.password"></app-input-error>
+          <app-input-error label="Nome" type="text" [control]="registration.controls.name"></app-input-error>
 
           <button style="margin: 10px 10px;" type="submit" mat-stroked-button>Registrar</button><br>
         </form>

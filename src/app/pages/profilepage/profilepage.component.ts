@@ -29,7 +29,7 @@ export class ProfilepageComponent {
   private snack = inject(MatSnackBar)
 
   readonly panelOpenState = signal(false);
-  public userName: string = "Julia";
+  public userName:any;
   public viandaAvailable: boolean = false;
   public isEditing: boolean = false;
   public vianda: any = null;
@@ -52,8 +52,9 @@ export class ProfilepageComponent {
         this.idVianda = res.id;
       })
       .catch((err) => this.viandaAvailable = false);
-
     this.fruit = this.profile.randomFruit();
+
+    this.userName = this.auth.getDisplayName();
 
     this.crud.returnCatImage().subscribe((data) => { this.profileImg = data[0].url });
   };
