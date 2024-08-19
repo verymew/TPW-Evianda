@@ -11,6 +11,9 @@ import { CommonModule } from '@angular/common';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import { InputErrorComponent } from '../../components/input-error/input-error.component';
+import {MatSnackBar} from '@angular/material/snack-bar';
+import { Action } from 'rxjs/internal/scheduler/Action';
+
 
 @Component({
   selector: 'app-authpage',
@@ -25,18 +28,20 @@ export class AuthpageComponent {
   public isLogin: Boolean = true;
   private auth = inject(AuthService);
   private router = inject(Router);
+  private snack = inject(MatSnackBar);
 
   constructor() {
   }
 
   registration = new FormGroup({
-    email: new FormControl('', Validators.required),
-    password: new FormControl('', Validators.required),
+    email: new FormControl('', [Validators.required, Validators.email]),
+    password: new FormControl('', [Validators.required, Validators.minLength(6)]),
+    name: new FormControl('', [Validators.required])
   });
 
   login = new FormGroup({
-    email: new FormControl('', Validators.required),
-    password: new FormControl('', Validators.required),
+    email: new FormControl('', [Validators.required, Validators.email]),
+    password: new FormControl('', [Validators.required]),
   });
 
   public clickEvent(event: MouseEvent) {
@@ -49,20 +54,21 @@ export class AuthpageComponent {
       const { email, password } = this.login.value;
       this.auth.login(email!, password!)
         .then((res) => { this.router.navigate(['profile']) })
-        .catch(err => alert('Erro: ' + err))
+        .catch(err => this.snack.open("Usuário não encontrado", '', {duration: 1000}))
     }
   }
 
   public registerNewUser(): void {
-    const { email, password } = this.registration.value;
+    const { email, password, name } = this.registration.value;
 
-    if (email && password) {
-      this.auth.registerUser(email.trim(), password?.trim())
+    if (email && password && name) {
+      this.auth.registerUser(email.trim(), password?.trim(), name?.trim())
         .then(message => {
-          alert("registrado!");
+          this.snack.open('Registrado!','', {duration: 2000});
+          this.router.navigate([''])
         })
         .catch(error => {
-          alert(error);
+          this.snack.open('Erro' + error,'', {duration: 2000});
         })
     }
   }

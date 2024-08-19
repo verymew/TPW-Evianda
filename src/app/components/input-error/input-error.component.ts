@@ -10,7 +10,7 @@ import { MatInputModule } from '@angular/material/input';
   templateUrl: './input-error.component.html',
   styleUrl: './input-error.component.css'
 })
-export class InputErrorComponent {
+export class InputErrorComponent implements OnInit {
   @Input()
   label = '';
   @Input()
@@ -19,6 +19,10 @@ export class InputErrorComponent {
   placeholder = '';
   @Input()
   control = new FormControl();
+  @Input()
+  chaveErro = '';
+  @Input()
+  msgErro = '';
 
   erros = new Map();
 
@@ -26,6 +30,11 @@ export class InputErrorComponent {
     this.erros.set('required', 'Campo obrigatório!');
     this.erros.set('email', 'Formato de e-mail inválido');
     this.erros.set('minlength', 'Mínimo de 6 caracteres');
+  }
+
+  ngOnInit() {
+    console.log('ngInit');
+    this.erros.set(this.chaveErro, this.msgErro);
   }
 
 

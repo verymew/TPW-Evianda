@@ -8,56 +8,27 @@
           </div>
           <div>
             <p style="font-weight: 500;">Viandas em:</p>
-            <p>São borja, RS</p>
+            <p>{{cityName}}</p>
           </div>
         </div>
         <mat-divider></mat-divider>
       </mat-card-content>
       <mat-card-content>
-        <p style="font-weight: 500;">Viandas em São borja</p>
+        <p style="font-weight: 500;">Viandas em {{cityName}}</p>
         <div class="vianda-cards" style="margin-top: 50px;">
-          <mat-card appearance="outlined" class="viandas">
-            <mat-card-content>Simple card</mat-card-content>
+          <mat-card *ngFor="let item of dataVianda" appearance="outlined" class="viandas">
+            <mat-card-content>
+              <p>{{item.data.nomevianda}}</p>
+              <p>Cardápio: {{item.data.cardapio}}</p>
+              <p>Contato: {{item.data.whatsapp}}</p>
+            </mat-card-content>
           </mat-card>
+        </div>
+        <div *ngIf="dataVianda == null">
+          <p>Não há registros</p>
         </div>
       </mat-card-content>
     </mat-card>
   </div>
 </main>
 
-<style>
-  main {
-    display: flex;
-    justify-content: center;
-    height: 100%;
-    align-items: center;
-    background-color: #fbdeff;
-    background-image: url('/square-versatiles.svg');
-  }
-
-  .viandas {
-    width: 250px;
-    height: 150px;
-    margin: 15px 15px;
-  }
-
-  .content {
-    width: 70%;
-  }
-
-  .card {
-    height: 500px;
-  }
-
-  @media (max-width: 620px) {
-    .content {
-      width: 90%;
-      margin: 15px 15px;
-    }
-
-    .vianda-cards {
-      display: flex;
-      justify-content: center;
-    }
-  }
-</style>

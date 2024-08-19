@@ -12,6 +12,7 @@ import { Router } from '@angular/router';
 import { FruitsPipe } from "../../pipes/fruits.pipe";
 import { ProfileService } from '../../services/profile.service';
 import { AuthService } from '../../services/auth.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-profilepage',
@@ -25,30 +26,33 @@ export class ProfilepageComponent {
   private router = inject(Router);
   private profile = inject(ProfileService);
   private auth = inject(AuthService);
+  private snack = inject(MatSnackBar)
 
   readonly panelOpenState = signal(false);
-  public userName: string = "Julia";
+  public userName:any;
   public viandaAvailable: boolean = false;
   public isEditing: boolean = false;
   public vianda: any = null;
   public profileImg: any = "";
   public fruit: string = "";
+  public idVianda: string = "";
 
   handleSave(data: any): void {
     this.crud.saveVianda(data)
       .then(data => window.location.reload())
-      .catch(err => console.error(err));
+      .catch(err => this.snack.open('Registrado!','', {duration: 2000})
+    );
   };
 
   ngOnInit(): void {
     this.crud.getVianda()
-      .then((data) => {
+      .then((res) => {
         this.viandaAvailable = true;
-        this.vianda = data;
+        this.vianda = res.data;
+        this.idVianda = res.id;
       })
       .catch((err) => this.viandaAvailable = false);
-
-    this.fruit = this.profile.randomFruit();
+    this.userName = this.auth.getDisplayName();
 
     this.crud.returnCatImage().subscribe((data) => { this.profileImg = data[0].url });
   };
@@ -57,7 +61,8 @@ export class ProfilepageComponent {
     this.crud.deleteVianda(userid)
       .then((res) => window.location.reload()
       )
-      .catch((error) => alert(error));
+      .catch((error) => this.snack.open('Registrado!','', {duration: 2000})
+    );
   };
 
   editVianda(): void {
@@ -65,15 +70,17 @@ export class ProfilepageComponent {
   };
 
   updateVianda(data: any): void {
-    const viandaId = data.id;
+    const viandaId = this.idVianda;
     this.crud.editVianda(viandaId, data)
       .then((res) => { window.location.reload() })
-      .catch((err) => console.error(err));
+      .catch((err) => this.snack.open('Registrado!','', {duration: 2000})
+    );
   };
 
   logOut(): void {
     this.auth.signOut()
       .then(() => window.location.reload())
-      .catch((error) => alert(error));
+      .catch((error) => this.snack.open('Registrado!','', {duration: 2000})
+    );
   };
 }
