@@ -1,11 +1,10 @@
 export const env = {
   firebaseConfig: {
-    apiKey: "AIzaSyAtTZp-6blqZ87U-61Rs3zoVRuIj-4quLg",
-    authDomain: "evianda.firebaseapp.com",
-    projectId: "evianda",
-    storageBucket: "evianda.appspot.com",
-    messagingSenderId: "184708874762",
-    appId: "1:184708874762:web:895392284d2e4176ff55f3",
-    measurementId: "G-GYJ3CWGYEC"
+    apiKey: "AIzaSyC-P4zO5Wx1X5DnEitTTs_YWX7ZtuFxC-k",
+    authDomain: "mula-139ac.firebaseapp.com",
+    projectId: "mula-139ac",
+    storageBucket: "mula-139ac.appspot.com",
+    messagingSenderId: "516757730836",
+    appId: "1:516757730836:web:aecee1cfb7343072731901"
   }
 };

@@ -12,7 +12,6 @@ import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import { InputErrorComponent } from '../../components/input-error/input-error.component';
 import {MatSnackBar} from '@angular/material/snack-bar';
-import { Action } from 'rxjs/internal/scheduler/Action';
 
 
 @Component({

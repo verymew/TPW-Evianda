@@ -54,7 +54,7 @@ export class ProfilepageComponent {
       .catch((err) => this.viandaAvailable = false);
     this.userName = this.auth.getDisplayName();
 
-    this.crud.returnCatImage().subscribe((data) => { this.profileImg = data[0].url });
+    this.crud.returnCatImage().subscribe((data:any) => { this.profileImg = data[0].url });
   };
 
   removeVianda(userid: string): void {
